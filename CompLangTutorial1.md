@@ -58,7 +58,7 @@ For this little tutorial I just grabbed a .txt version of the Project Gutenberg 
 ```r
   #The first step is to read the text file into R
   #This command opens the URL and defines each object by the whitespace around it
-  data <- scan("http://www.textfiles.com/etext/FICTION/alice13a.txt",character(0))
+  x <- scan("http://www.textfiles.com/etext/FICTION/alice13a.txt",character(0))
   
   #You can look at what is now stored at x by typing
   #This prints all of the values stored in x
@@ -93,7 +93,7 @@ For this little tutorial I just grabbed a .txt version of the Project Gutenberg 
   twoGram <- ngramrr(x, ngmin = 2, ngmax = 2)
   
   #To make a threeGram
-  threeGram <- ngramrr(x, ngmax = 3, ngmax = 3)
+  threeGram <- ngramrr(x, ngmin = 3, ngmax = 3)
   
   #Etc, etc, etc...
   
@@ -114,7 +114,7 @@ Well since we won't be going into the horribly complicated world of word predict
 ```r
   #R makes this process fairly easy because of its "table" (i.e. data.frame) format
   frequency <- table(oneGram)
-  head(freqency, 25)
+  head(frequency, 25)
   
   #A quick look at "frequency" shows us that while the words have been counted, things are still pretty messy, so we'd like sort them by order of occurence
   frequency <- sort(frequency, decreasing = TRUE)
