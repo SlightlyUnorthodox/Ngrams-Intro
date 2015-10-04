@@ -33,8 +33,9 @@ Download and install RStudio [here](https://www.rstudio.com/products/rstudio/dow
 
 CRAN, short for The Comprehensive R Network has a library containing thousands of packages which is update regularly. It happens to have several libraries of interest to computational linguistics of which the following are a few.
 
-* NLP, found [here](https://cran.r-project.org/web/packages/NLPutils/index.html) with [manual](https://cran.r-project.org/web/packages/NLP/NLP.pdf)
-* NLP
+* More ngram tools with **ngramrr**, found [here](https://cran.r-project.org/web/packages/ngramrr/index.html) and [manual](https://cran.r-project.org/web/packages/ngramrr/ngramrr.pdf) here
+* Natural Language Processing with **NLP**, found [here](https://cran.r-project.org/web/packages/NLPutils/index.html) with [manual](https://cran.r-project.org/web/packages/NLP/NLP.pdf) here
+* Word Frequency Distributions **ZipfR**, found [here](https://cran.r-project.org/) with [manual](https://cran.r-project.org/web/packages/zipfR/zipfR.pdf) here
 
 #### Tutorials
 
@@ -49,6 +50,10 @@ If you're interested in learning more about programming in R, Swirl tutorials ca
 The full library of swirl commands is available [here](https://github.com/swirldev/swirl_courses)
 
 #### Other Interesting Resources
+
+Mostly just some things I stumbled across in the process of putting this all together
+
+
 
 
   
