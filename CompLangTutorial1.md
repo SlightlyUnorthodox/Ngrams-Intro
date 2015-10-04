@@ -43,6 +43,8 @@ That I should be able to break that phrase into ngrams of size, say 3, like so..
 
 And assign some type of predictive value to each of those ngrams. For instance, I might say that the ngram "does one do" has a probabilistic value that the next word should be "with" of 20%. That of course is probably not accurate, but its just an example.
 
+For a more comprehensive definition of ngrams see [ngrams on wikipedia](https://en.wikipedia.org/wiki/N-gram)
+
 The actual methods used to extract information from ngrams become very complicated rather quickly, but there are also a number  of things that fairly easily.
 
 <img src="http://betweenthenumbers.net/wp-content/uploads/2013/11/table-1.png">
@@ -67,9 +69,62 @@ For this little tutorial I just grabbed a .txt version of the Project Gutenberg 
   
   #Or you can look at the end values, using the tail() command
   tail(x, 42) 
+  
+  #Now, to turn this text into an ngram, we'll have to first install and load the package, ngramrr
+  
+  #To install the ngrammrr package
+  install.packages("ngrammrr")
+  
+  #To load the ngramrr package into the current session
+  library(ngramrr)
+  
+  #And now to create the ngram
+  #Lets start with a simple 1 gram
+  oneGram <- ngramrr(x, ngmin = 1, ngmax = 1)
+  
+  #We can now use the same head and tail functions as before to get a quick look at what the one gram looks like
+  head(oneGram, 400)
+  
+  #As you can see, the word "Alice" is used quite a bit in the text (more on that later)
+  
+  #Now lets experiment with something more interesting
+  
+  #To make a twoGram
+  twoGram <- ngramrr(x, ngmin = 2, ngmax = 2)
+  
+  #To make a threeGram
+  threeGram <- ngramrr(x, ngmax = 3, ngmax = 3)
+  
+  #Etc, etc, etc...
+  
+  #The ngramrr package also lets you mix up sizes of ngram, like so
+  oneTwoThreeGram <- ngramrr(x, ngmin = 1, ngmax = 3)
+  
+  #What if you wanted to make a 10gram, how long do you think that would take?
+  #Let's give it a try
+  oneThruTenGram <- ngramrr(x, ngmin = 1, ngmax = 10)
+  
+  #As you can see, this rapidly becomes much more time consuming
 ```
 
-<img src="http://4.bp.blogspot.com/-IgIAqZffdFA/UMZ2rD_S98I/AAAAAAAAASk/qNnb-9EtKd4/s1600/google_book_ngram.png">
+One question that might be asked is, "well what do we do now?" 
+
+Well since we won't be going into the horribly complicated world of word prediction, a relatively easy thing to do would be to look at the frequencies of different words.
+
+```r
+  #R makes this process fairly easy because of its "table" (i.e. data.frame) format
+  frequency <- table(oneGram)
+  head(freqency, 25)
+  
+  #A quick look at "frequency" shows us that while the words have been counted, things are still pretty messy, so we'd like sort them by order of occurence
+  frequency <- sort(frequency, decreasing = TRUE)
+  head(frequency, 25)
+  
+  #Now we can begin to see some interesting things (
+```
+
+
+<img src="http://4.bp.blogspot.com/-IgIAqZffdFA/UMZ2rD_S98I/AAAAAAAAASk/qNnb-9EtKd4/s1600/google_book_ngram.png" width = 600 heigth = 300>
 
 #### Google Ngrams viewer in R
 
@@ -90,7 +145,7 @@ At some point in time someone also adapted the Google Ngram Viewer to work in R,
 
 CRAN, short for The Comprehensive R Network has a library containing thousands of packages which is update regularly. It happens to have several libraries of interest to computational linguistics of which the following are a few.
 
-* More ngram tools with **ngramrr**, found [here](https://cran.r-project.org/web/packages/ngramrr/index.html) and [manual](https://cran.r-project.org/web/packages/ngramrr/ngramrr.pdf) here
+* More ngram tools with **ngramr**, found [here](https://cran.r-project.org/web/packages/ngramrr/index.html) and [manual](https://cran.r-project.org/web/packages/ngramrr/ngramrr.pdf) here
 * Natural Language Processing with **NLP**, found [here](https://cran.r-project.org/web/packages/NLPutils/index.html) with [manual](https://cran.r-project.org/web/packages/NLP/NLP.pdf) here
 * Word Frequency Distributions **ZipfR**, found [here](https://cran.r-project.org/) with [manual](https://cran.r-project.org/web/packages/zipfR/zipfR.pdf) here
 
