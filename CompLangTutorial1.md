@@ -134,8 +134,15 @@ You can experiment with the Google Ngram Viewer [here](https://books.google.com/
 
 At some point in time someone also adapted the Google Ngram Viewer to work in R, which we'll experiment with now.
 
-```r
+*Note: this package was really only designed for quick queries. Hence, it is not really suited for any length analysis*
 
+```r
+  #install and load the ngramr package
+  install.packages("ngramr")
+  library(ngramr)
+  
+  phrases <- c("Soda","Pop","Coke","Soft Drink","Soda Pop")
+  ggram(phrases,ignore_case=TRUE)
 ```
 
 
@@ -145,7 +152,7 @@ At some point in time someone also adapted the Google Ngram Viewer to work in R,
 
 CRAN, short for The Comprehensive R Network has a library containing thousands of packages which is update regularly. It happens to have several libraries of interest to computational linguistics of which the following are a few.
 
-* More ngram tools with **ngramr**, found [here](https://cran.r-project.org/web/packages/ngramrr/index.html) and [manual](https://cran.r-project.org/web/packages/ngramrr/ngramrr.pdf) here
+* Text Mining with **tm** [here](https://cran.r-project.org/web/packages/tm/index.html) and [manual](https://cran.r-project.org/web/packages/tm/tm.pdf) here
 * Natural Language Processing with **NLP**, found [here](https://cran.r-project.org/web/packages/NLPutils/index.html) with [manual](https://cran.r-project.org/web/packages/NLP/NLP.pdf) here
 * Word Frequency Distributions **ZipfR**, found [here](https://cran.r-project.org/) with [manual](https://cran.r-project.org/web/packages/zipfR/zipfR.pdf) here
 
@@ -170,8 +177,13 @@ The full library of swirl courses is available [here](https://github.com/swirlde
 
 Mostly just some things I stumbled across in the process of putting this all together
 
+[Guide to writing docs in Markdown](https://guides.github.com/features/mastering-markdown/)
 
+[Some slides on word freqency distributions in R](http://www.stefan-evert.de/SIGIL/potsdam_2007/materials/zipfR.slides.pdf)
 
+[Another approach to text mining with the 'tm' package](https://deltadna.com/blog/text-mining-in-r-for-term-frequency/)
+
+[A quick look at prediction with N-grams and Markov chains in r](http://shiffman.net/teaching/a2z/generate/#ngrams)
 
   
 
