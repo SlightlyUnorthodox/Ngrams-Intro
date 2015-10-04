@@ -183,7 +183,7 @@ Mostly just some things I stumbled across in the process of putting this all tog
 
 [Another approach to text mining with the 'tm' package](https://deltadna.com/blog/text-mining-in-r-for-term-frequency/)
 
-[A quick look at prediction with N-grams and Markov chains in r](http://shiffman.net/teaching/a2z/generate/#ngrams)
+[A quick look at prediction with N-grams and Markov chains in R](http://shiffman.net/teaching/a2z/generate/#ngrams)
 
   
 
