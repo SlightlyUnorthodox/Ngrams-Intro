@@ -49,7 +49,7 @@ class madlibGUI(Tkinter.Tk):
         self.entryVariable.set(u"press 'Enter' to begin.")
         self.entry = Tkinter.Entry(self,textvariable=self.entryVariable,font = self.customFont)
         self.entry.grid(column=0,row=1,sticky='EW')
-        self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, -1))
+        self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, 0))
 
         #"Start New Madlib Button"
         button = Tkinter.Button(self,text=u"Start new madlib", command=self.OnButtonClick,font = self.customFont)
@@ -72,34 +72,37 @@ class madlibGUI(Tkinter.Tk):
         self.initialize()
 
     def OnPressEnter(self,event,it):
-        it += 1
 
-        #POS directions field
-        if pos[it] == "adjective":
-            self.posVariable.set("Enter an " + pos[it])
-        else:
-            self.posVariable.set("Enter a " + pos[it])
+        if it < size: 
+            #POS directions field
+            if pos[it] == "adjective":
+                self.posVariable.set("Enter an " + pos[it])
+            else:
+                self.posVariable.set("Enter a " + pos[it])
 
-        #Value entered tag line
-        if it !=  0:
+        if it > 0:
             #Replace word in madlib
             temp = sentences[it-1].split()
             temp[it-1] = self.entryVariable.get()
             sentences[it-1] = ' '.join(temp)
 
-            if pos[it] == "adjective":
-                self.labelVariable.set("You entered " + self.entryVariable.get() + " as an " + pos[it])
+            #Value entered tag line
+            if pos[it-1] == "adjective":
+                self.labelVariable.set("You entered " + self.entryVariable.get() + " as an " + pos[it-1])
             else:
-                self.labelVariable.set("You entered " + self.entryVariable.get() + " as a " + pos[it])            
-        
+                self.labelVariable.set("You entered " + self.entryVariable.get() + " as a " + pos[it-1])
+
         #Clear text entry field
         self.entryVariable.set("")
 
-        #check end condition
-        if it != size - 1:
-            self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, it))
-        else:
-            self.entry.bind("<Return>",lambda event: self.printResults(event, it))
+        #Catch end condition
+        if it == size:
+            self.printResults(event,it)
+
+        it += 1
+
+        #Catch value entered
+        self.entry.bind("<Return>",lambda event: self.OnPressEnter(event,it))
 
     def printResults(self,event,it):
         #Set fields to end values
