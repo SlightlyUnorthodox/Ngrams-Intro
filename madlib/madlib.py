@@ -80,16 +80,21 @@ class madlibGUI(Tkinter.Tk):
         else:
             self.posVariable.set("Enter a " + pos[it])
 
-        #Clear text entry field
-        self.entryVariable.set("")
-
         #Value entered tag line
         if it !=  0:
+            #Replace word in madlib
+            temp = sentences[it-1].split()
+            temp[it-1] = self.entryVariable.get()
+            sentences[it-1] = ' '.join(temp)
+
             if pos[it] == "adjective":
                 self.labelVariable.set("You entered " + self.entryVariable.get() + " as an " + pos[it])
             else:
                 self.labelVariable.set("You entered " + self.entryVariable.get() + " as a " + pos[it])            
         
+        #Clear text entry field
+        self.entryVariable.set("")
+
         #check end condition
         if it != size - 1:
             self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, it))
@@ -100,12 +105,15 @@ class madlibGUI(Tkinter.Tk):
         #Set fields to end values
         self.posVariable.set("Click the button to start a new Madlib")
         self.entryVariable.set("")
-        self.labelVariable = Tkinter.StringVar()
-        label = Tkinter.Label(self,textvariable=self.labelVariable,anchor="w",fg="black",bg="white",font = self.customFont)
-        label.grid(column=0,row=2,columnspan=2,sticky="EW")
-        for i in range(0,5):
-            label.grid(column=0,row=2+i,columnspan=2,stick="EW")    
-            self.labelVariable.set("Final Madlib goes here ")
+
+        root2 = Tkinter.Tk()
+        root2.minsize(width=400, height=250)
+        root2.maxsize(width=400, height=250)
+        root2.title("Your Madlib")
+        for i in range(0,size):
+            Tkinter.Label(root2, text =sentences[i],borderwidth=1,font =tkFont.Font(family="arial", size=14)).grid(row=i,column=0)
+        root2.mainloop
+        
 
     def madlibSetup(self,size):
     	
