@@ -1,10 +1,11 @@
-#!/usr/bin/python
-# -*- coding: iso-8859-1 -*-
+# Project: Madlib Generator
+# Created By: UF Computational Linguistics Club
+# Team: ____
+#
 
 import Tkinter
 import tkFont
-import numpy
-#import sentenceGenerator
+import sentenceGenerator
 
 #Madlib GUI class
 class madlibGUI(Tkinter.Tk):
@@ -77,22 +78,30 @@ class madlibGUI(Tkinter.Tk):
         #Check end condition (after n sentences)
 
     def madlibSetup(self):
+    	global size
+    	size = 5
+
+    	#Text string for madlib sentences
     	global sentences #ex/
     	sentences = []
+
+    	#Corresponding text string for sentence text
     	global sentencesPOS
-    	sentencesPOS = [] 
+    	sentencesPOS = []
+
+    	#Index of word/pos to replace
         global replace #ex/
-        replace = []
+
+        #Text part of speech of word to replace
         global pos
-        pos = "noun"
-        for i in range(1,10):
+       
+        for i in range(0,size-1):
         	#test cases
-        	sentences.append("Sentence" + str(i) + " is a demo sentence")
-        	sentencesPOS.append("noun verb article adjective noun")
-        	replace.append(3)
-        #	sentences[i] = madlib.generateSentence()
-        #	replace[i] = madlib.wordReplacer()
-        #pos = replace[0]
+        	x = sentenceGenerator.generateSentence(1,size)
+        	sentences.append(x[0])
+        	sentencesPOS.append(x[1])
+        	replace = sentenceGenerator.wordReplacer(sentencesPOS[i])
+        pos = sentencesPOS[0].split()[replace]
 
 if __name__ == "__main__":
     madlib = madlibGUI(None)
