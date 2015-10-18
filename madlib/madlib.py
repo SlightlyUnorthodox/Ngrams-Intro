@@ -23,28 +23,33 @@ class madlibGUI(Tkinter.Tk):
         
     #Gui initialization
     def initialize(self):
+    	
+    	#number of sentences to generate (i.e. size of paragraph)
+    	global size
+    	size = 5
+
+    	global it
+    	it = 0
 
     	#Generate madlib
-        self.madlibSetup()
+        self.madlibSetup(size)
 
         #Gui config
         self.customFont = tkFont.Font(family="arial", size=14)
         self.grid()
         
-        #POS directions field
+        #Upper Banner
         self.posVariable = Tkinter.StringVar()
-        self.posVariable.set("Enter a " + pos)
-        posDirect = Tkinter.Label(self,textvariable=self.posVariable,anchor="w",fg="white",bg="black",font = self.customFont)
-        posDirect.grid(column=0,row=0,columnspan=2,sticky='EW')
+        self.posVariable.set(u"Welcome to the Madlib Generator")
+        welcomeBanner = Tkinter.Label(self,textvariable=self.posVariable,anchor="w",fg="black",bg="white",font = self.customFont)   
+        welcomeBanner.grid(column=0,row=0,columnspan=2,sticky="EW")
 
         #Word entry field
         self.entryVariable = Tkinter.StringVar()
+        self.entryVariable.set(u"press 'Enter' to begin.")
         self.entry = Tkinter.Entry(self,textvariable=self.entryVariable,font = self.customFont)
         self.entry.grid(column=0,row=1,sticky='EW')
-        self.entry.bind("<Return>", self.OnPressEnter)
-
-		#On start: standing text        
-        self.entryVariable.set(u"Enter your first " + pos + " here.")
+        self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, -1))
 
         #"Start New Madlib Button"
         button = Tkinter.Button(self,text=u"Start new madlib", command=self.OnButtonClick,font = self.customFont)
@@ -52,9 +57,8 @@ class madlibGUI(Tkinter.Tk):
 
         #Word entered field
         self.labelVariable = Tkinter.StringVar()
-        label = Tkinter.Label(self,textvariable=self.labelVariable,anchor="w",fg="white",bg="blue",font = self.customFont)
-        label.grid(column=0,row=2,columnspan=2,sticky='EW')
-        #self.labelVariable.set(u"Hello !")
+        label = Tkinter.Label(self,textvariable=self.labelVariable,anchor="w",fg="black",bg="white",font = self.customFont)
+        label.grid(column=0,row=2,columnspan=2,sticky="EW")
 
         self.grid_columnconfigure(0,weight=5)
         self.resizable(True,False)
@@ -64,23 +68,47 @@ class madlibGUI(Tkinter.Tk):
         self.entry.selection_range(0, Tkinter.END)
 
     def OnButtonClick(self):
+    	#Resets everything
         self.initialize()
-        #self.labelVariable.set( self.entryVariable.get())
-        #self.entry.focus_set()
-        #self.entry.selection_range(0, Tkinter.END)
 
-    def OnPressEnter(self,event):
-    	#Add word function here
+    def OnPressEnter(self,event,it):
+        it += 1
 
-        self.labelVariable.set("You entered " + self.entryVariable.get() + " as a " + pos)
-        self.entry.focus_set()
-        self.entry.selection_range(0, Tkinter.END)
-        #Check end condition (after n sentences)
+        #POS directions field
+        if pos[it] == "adjective":
+            self.posVariable.set("Enter an " + pos[it])
+        else:
+            self.posVariable.set("Enter a " + pos[it])
 
-    def madlibSetup(self):
-    	global size
-    	size = 5
+        #Clear text entry field
+        self.entryVariable.set("")
 
+        #Value entered tag line
+        if it !=  0:
+            if pos[it] == "adjective":
+                self.labelVariable.set("You entered " + self.entryVariable.get() + " as an " + pos[it])
+            else:
+                self.labelVariable.set("You entered " + self.entryVariable.get() + " as a " + pos[it])            
+        
+        #check end condition
+        if it != size - 1:
+            self.entry.bind("<Return>",lambda event: self.OnPressEnter(event, it))
+        else:
+            self.entry.bind("<Return>",lambda event: self.printResults(event, it))
+
+    def printResults(self,event,it):
+        #Set fields to end values
+        self.posVariable.set("Click the button to start a new Madlib")
+        self.entryVariable.set("")
+        self.labelVariable = Tkinter.StringVar()
+        label = Tkinter.Label(self,textvariable=self.labelVariable,anchor="w",fg="black",bg="white",font = self.customFont)
+        label.grid(column=0,row=2,columnspan=2,sticky="EW")
+        for i in range(0,5):
+            label.grid(column=0,row=2+i,columnspan=2,stick="EW")    
+            self.labelVariable.set("Final Madlib goes here ")
+
+    def madlibSetup(self,size):
+    	
     	#Text string for madlib sentences
     	global sentences #ex/
     	sentences = []
@@ -90,18 +118,23 @@ class madlibGUI(Tkinter.Tk):
     	sentencesPOS = []
 
     	#Index of word/pos to replace
-        global replace #ex/
+        global replace
+        replace = [] #ex/
 
         #Text part of speech of word to replace
         global pos
+        pos = []
        
-        for i in range(0,size-1):
-        	#test cases
+        for i in range(0,size):
+        	#Run sentence generator
         	x = sentenceGenerator.generateSentence(1,size)
+        	#Store sentences and sentencesPOS (as parts-of-speech)
         	sentences.append(x[0])
         	sentencesPOS.append(x[1])
-        	replace = sentenceGenerator.wordReplacer(sentencesPOS[i])
-        pos = sentencesPOS[0].split()[replace]
+        	#Identify word from each sentence to replace, store indices
+        	replace.append(sentenceGenerator.wordReplacer(sentencesPOS[i]))
+        	#Identify part-of-speech of each replacement word
+        	pos.append(sentencesPOS[i].split()[replace[i]])
 
 if __name__ == "__main__":
     madlib = madlibGUI(None)
