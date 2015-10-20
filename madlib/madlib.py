@@ -114,7 +114,7 @@ class madlibGUI(Tkinter.Tk):
         root2.maxsize(width=400, height=250)
         root2.title("Your Madlib")
         for i in range(0,size):
-            Tkinter.Label(root2, text =sentences[i],borderwidth=1,font =tkFont.Font(family="arial", size=14)).grid(row=i,column=0)
+            Tkinter.Label(root2, text =sentences[replace[i]],borderwidth=1,font =tkFont.Font(family="arial", size=14)).grid(row=i,column=0)
         root2.mainloop
         
 
