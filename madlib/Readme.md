@@ -4,7 +4,7 @@ Project: Madlib Generator
 
 Created By: UF Computational Linguistics Club
 
-Team:
+Team: Fall 2015 Complang
 
 Date: 20 October 2015
 
